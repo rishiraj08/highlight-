@@ -1,0 +1,112 @@
+import openpyxl as xl
+
+ 
+
+wb = xl.load_workbook('rishiji.xlsx')
+
+ 
+
+sheet = wb.active
+
+ 
+
+max_row = sheet.max_row
+
+max_column = sheet.max_column
+
+space_chars = ('.', '(', ')', '|')
+
+no_space_chars = (",", "'")
+
+ 
+
+def listcompare(commnew, commold, listone, listtwo):
+
+    print(commnew)
+
+    print(commold)
+
+    if len(listone)>len(listtwo):
+
+        for index in range(0, len(listtwo)):
+
+            if listone[index] != listtwo[index]:
+
+                print(index)
+
+        for index2 in range(len(listone) - (len(listone)-len(listtwo)), len(listone)):
+
+            print(index2+1)
+
+    elif len(listone)<len(listtwo):
+
+        for index in range(0, len(listone)):
+
+            if listtwo[index] != listone[index]:
+
+                print(index)
+
+        for index2 in range(len(listtwo) - (len(listtwo)-len(listone)), len(listtwo)):
+
+            print(index2)
+
+    else:
+
+        for index in range(0, listone):
+
+            if listone[index] != listtwo[index]:
+
+                print(index)
+
+ 
+
+ 
+
+for y in range(1, max_row+1):
+
+    j = []
+
+    k = []
+
+    oldcommentary = ""
+
+    newcommentary = ""
+
+    for x in range(1, max_column+1):
+
+        cell_obj = sheet.cell(row=y, column=x)
+
+        cellstring = cell_obj.value.strip()
+
+        newstring = ""
+
+ 
+
+        for character in range(0, len(cellstring)):
+
+            if cellstring[character] == '.' orcellstring[character] == '(' or cellstring[character] == ')':
+
+                newstring += " "
+
+            elif cellstring[character] == "'" orcellstring[character] == ",":
+
+                newstring += ""
+
+            else:
+
+                newstring += cellstring[character]
+
+        if x%2 == 0:
+
+            j = (newstring.split())
+
+            newcommentary = newstring
+
+        else:
+
+            k = (newstring.split())
+
+            oldcommentary = newstring
+
+    listcompare(newcommentary, oldcommentary, j,k)
+
